@@ -1,20 +1,43 @@
 package model;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Aluno {
-    private int id;
+
+    // 1. Campos de aluno o
+    private Integer id;
     private String nome;
     private String cpf;
-    private Date data_nascimento;
+    private LocalDate dataNascimento;
     private String telefone;
     private String email;
 
-    public int getId() {
+    public Aluno() {}
+    public Aluno(String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    //Construtor
+
+    public Aluno(Integer id, String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    // Geters e Setters (clica luzinha)
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,12 +57,12 @@ public class Aluno {
         this.cpf = cpf;
     }
 
-    public Date getData_nascimento() {
-        return data_nascimento;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setData_nascimento(Date data_nascimento) {
-        this.data_nascimento = data_nascimento;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getTelefone() {
@@ -56,5 +79,17 @@ public class Aluno {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+               "id=" + id +
+               ", nome='" + nome + '\'' +
+               ", cpf='" + cpf + '\'' +
+               ", dataNascimento=" + dataNascimento +
+               ", telefone='" + telefone + '\'' +
+               ", email='" + email + '\'' +
+               '}';
     }
 }

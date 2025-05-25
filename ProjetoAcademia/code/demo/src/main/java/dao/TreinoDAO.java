@@ -11,7 +11,7 @@ import java.util.List;
 import model.Treino;
 
 public class TreinoDAO {
-    private Connection connection;
+    private final Connection connection;
 
     public TreinoDAO(Connection connection) {
         this.connection = connection;

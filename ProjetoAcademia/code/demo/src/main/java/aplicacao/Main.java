@@ -20,77 +20,84 @@ public class Main {
             // cadastrarAluno();
             cadastrarTreino(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
     }
 
     public static void cadastrarAluno() {
         Aluno aluno = criarNovoAluno();
-        AlunoDAO alunoDAO = new AlunoDAO();
-        alunoDAO.Cadastrar(aluno);
+        AlunoDAO alunoDAO = new AlunoDAO(
+            aluno.getNome(),
+            aluno.getCpf(),
+            java.sql.Date.valueOf(aluno.getDataNascimento()),
+            aluno.getTelefone(),
+            aluno.getEmail()
+        );
+        alunoDAO.inserir(aluno);
     }
 
     public static Aluno criarNovoAluno() {
-        Scanner scanner = new Scanner(System.in);
         Aluno aluno = new Aluno();
+        try (Scanner scanner = new Scanner(System.in)) {
 
-        System.out.print("Nome: ");
-        aluno.setNome(scanner.nextLine());
+            System.out.print("Nome: ");
+            aluno.setNome(scanner.nextLine());
 
-        System.out.print("CPF: ");
-        aluno.setCpf(scanner.nextLine());
+            System.out.print("CPF: ");
+            aluno.setCpf(scanner.nextLine());
 
-        System.out.print("Telefone: ");
-        aluno.setTelefone(scanner.nextLine());
+            System.out.print("Telefone: ");
+            aluno.setTelefone(scanner.nextLine());
 
-        System.out.print("Email: ");
-        aluno.setEmail(scanner.nextLine());
+            System.out.print("Email: ");
+            aluno.setEmail(scanner.nextLine());
 
-        System.out.print("Data de nascimento (yyyy-MM-dd): ");
-        try {
-            String dataStr = scanner.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date data = sdf.parse(dataStr);
-            aluno.setData_nascimento(new Date(data.getTime()));
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.print("Data de nascimento (yyyy-MM-dd): ");
+            try {
+                String dataStr = scanner.nextLine();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date data = sdf.parse(dataStr);
+                aluno.setDataNascimento(data.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            } catch (java.text.ParseException | java.time.DateTimeException e) {
+                System.err.println("Erro ao processar a data de nascimento: " + e.getMessage());
+            }
         }
-
         return aluno;
     }
 
     public static void cadastrarTreino(Connection connection) {
-        Scanner scanner = new Scanner(System.in);
-        Treino treino = new Treino();
+        try (Scanner scanner = new Scanner(System.in)) {
+            Treino treino = new Treino();
 
-        System.out.print("ID do Aluno: ");
-        treino.setIdAluno(Integer.parseInt(scanner.nextLine()));
+            System.out.print("ID do Aluno: ");
+            treino.setIdAluno(Integer.parseInt(scanner.nextLine()));
 
-        System.out.print("Tipo de treino: ");
-        treino.setTipoTreino(scanner.nextLine());
+            System.out.print("Tipo de treino: ");
+            treino.setTipoTreino(scanner.nextLine());
 
-        System.out.print("Descrição: ");
-        treino.setDescricao(scanner.nextLine());
+            System.out.print("Descrição: ");
+            treino.setDescricao(scanner.nextLine());
 
-        System.out.print("Duração em minutos: ");
-        treino.setDuracaoMinutos(Integer.parseInt(scanner.nextLine()));
+            System.out.print("Duração em minutos: ");
+            treino.setDuracaoMinutos(Integer.parseInt(scanner.nextLine()));
 
-        System.out.print("Data de início (yyyy-MM-dd): ");
-        try {
-            String dataStr = scanner.nextLine();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date data = sdf.parse(dataStr);
-            treino.setDataInicio(new Date(data.getTime()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            System.out.print("Data de início (yyyy-MM-dd): ");
+            try {
+                String dataStr = scanner.nextLine();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date data = sdf.parse(dataStr);
+                treino.setDataInicio(new Date(data.getTime()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        try {
-            TreinoDAO treinoDAO = new TreinoDAO(connection);
-            treinoDAO.inserir(treino);
-            System.out.println("Treino cadastrado com sucesso!");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                TreinoDAO treinoDAO = new TreinoDAO(connection);
+                treinoDAO.inserir(treino);
+                System.out.println("Treino cadastrado com sucesso!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

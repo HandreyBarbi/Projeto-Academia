@@ -1,5 +1,5 @@
 package model;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Aluno {
 
@@ -7,12 +7,12 @@ public class Aluno {
     private Integer id;
     private String nome;
     private String cpf;
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
     private String telefone;
     private String email;
 
     public Aluno() {}
-    public Aluno(String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+    public Aluno(String nome, String cpf, Date dataNascimento, String telefone, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
@@ -22,7 +22,7 @@ public class Aluno {
 
     //Construtor
 
-    public Aluno(Integer id, String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+    public Aluno(Integer id, String nome, String cpf, Date dataNascimento, String telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -57,11 +57,11 @@ public class Aluno {
         this.cpf = cpf;
     }
 
-    public LocalDate getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

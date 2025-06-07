@@ -1,3 +1,5 @@
+![Academia](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F2968249.jpg&f=1&nofb=1&ipt=dccb4cd55f7ed9a990e08cf13a798cbe28d52f2c3ccd67b0659723f377fbc89b)
+
 # 💪 Projeto academia
 
 O sistema segue uma abordagem modular, com separação clara entre interface, regras de negócio e acesso a dados. Sendo também, uma aplicação Java com um menu principal com opções para gerenciar alunos e treinos, com interface de linha de comando (CLI), conexão com banco de dados MySQL e Operações CRUD completas. Desenvolvido como parte do trabalho acadêmico A3, para a disciplina de Programação de solução computacionais.

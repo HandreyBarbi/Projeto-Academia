@@ -211,7 +211,7 @@ public static void editarAluno(Connection connection) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date data = sdf.parse(dataStr);
         // Eu vou arrumar essa linha de baixo amanhã, tô quase sem bateria no notebook.
-        aluno.setDataNascimento(data.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+        aluno.setDataNascimento(new java.sql.Date(data.getTime()));
     } catch (Exception e) {
         System.err.println("Erro ao processar a data de nascimento: " + e.getMessage());
     }
@@ -262,7 +262,7 @@ public static void excluirAluno(Connection connection) {
             String dataStr = scanner.nextLine();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data = sdf.parse(dataStr);
-            aluno.setDataNascimento(data.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            aluno.setDataNascimento(new java.sql.Date(data.getTime()));
         } catch (Exception e) {
             System.err.println("Erro ao processar a data de nascimento: " + e.getMessage());
         }

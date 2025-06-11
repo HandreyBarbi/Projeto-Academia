@@ -26,10 +26,6 @@ public class AlunoDAO {
         this.email = email;
     }
 
-    public AlunoDAO() {
-        // Construtor vazio para uso do DAO
-    }
-
     public void cadastrar(Connection conn, Aluno aluno) throws SQLException {
         String sql = "INSERT INTO alunos (nome, cpf, data_nascimento, telefone, email) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

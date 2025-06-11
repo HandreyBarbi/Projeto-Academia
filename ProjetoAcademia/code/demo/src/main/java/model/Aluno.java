@@ -3,13 +3,15 @@ import java.util.Date;
 
 public class Aluno {
 
-    // 1. Campos de aluno o
+    // 1. Campos de aluno
     private Integer id;
     private String nome;
     private String cpf;
     private Date dataNascimento;
     private String telefone;
     private String email;
+
+    // Usando Integer ao invés de int para caso de valores nulos e para listar os objetos (segundo a internet só assim funciona)
 
     public Aluno() {}
     public Aluno(String nome, String cpf, Date dataNascimento, String telefone, String email) {
@@ -31,7 +33,7 @@ public class Aluno {
         this.email = email;
     }
 
-    // Geters e Setters (clica luzinha)
+    // Geters e Setters
 
     public Integer getId() {
         return id;

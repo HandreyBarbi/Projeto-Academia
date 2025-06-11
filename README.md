@@ -6,6 +6,46 @@ O sistema segue uma abordagem modular, com separação clara entre interface, re
 
 ---
 
+# 🌐 Como utilizar
+
+
+
+## Requisitos para funcionamento
+
+Por ser um programa simples é necessário fazer mínimas alterações no código e baixar alguns aplicativos. Tudo será explicado em baixo
+
+Wampserver: https://sourceforge.net/projects/wampserver/
+Serve para criar uma conexão local. Lembre-se de baixar os requisitos dele também!
+
+MySQL Workbench: https://dev.mysql.com/downloads/workbench/
+Usado para criar o banco de dados
+O link leva direto para a versão de Windows então é importante garantir que esse seja seu OS, se não for o caso, troque para o OS utilizado
+
+Para caso de falta de Visual C++ da Microsoft, os downloads estão aqui: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+
+## Passo a passo para funcionar
+
+- Vá para o arquivo "banco_de_dados.sql" que existe no github
+- Copie todo o texto no arquivo
+- Abra o Wampserver
+- Abra o MySQL Workbench
+- Entre no servidor local
+- Copie o código e vá executando cada parte dele (cada bolinha azul indicada no programa é um comando diferente. Para executar use CTRL + Enter enquanto uma parte é selecionada)
+- Abra o arquivo **.java** localizado em ProjetoAcademia/code/demo/src/main/java/util/
+- Verifique na linha 17 se a senha condiz com a sua utilizada no servidor local (deixe vazia para nenhuma senha)
+- Por final, execute o arquivo Main.java localizado em ProjetoAcademia/code/demo/src/main/java/aplicacao/
+- Se tudo ocorrer como previsto, o código irá rodar
+
+## Dentro do CLI
+
+- Usando os números do teclado você irá se locomover pelos menus
+- O tratamento de erros é feito com switch case e try/catch então aguarde informações de possíveis erros envolvendo o driver
+- As dependências do código estão listadas no arquivo pom.xml
+
+---
+
+# 🔹Geral
+
 ## ⚙️ Como funciona? 
 
 Geral
@@ -59,15 +99,16 @@ Para Treinos:
 
 - Buscar conhecimento sobre banco de dados e Java. 
 - Conexão com banco de dados.
-- Programar em Java.
+- Programação mais avançada em Java.
 - Organização no GitHub.
   
-
 ---
 
 ## 📚 O que aprendemos?
 
 - Integração com banco de dados.
+- Uso de MySQL
+- Conhecimento aprofundado em JDBC
 - Aprimoramos o conhecimento em Java.
 - Manuseio de IDEs e bancos de dados.
 

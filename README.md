@@ -55,14 +55,14 @@ Geral
 
 ## Componentes Principais
 
-1.Estrutura de Pacotes
+1. Estrutura de Pacotes
 
  - Aplicacao: Contém a classe Main com a lógica principal do programa.
  - DAO: Classes de acesso a dados (AlunoDAO e TreinoDAO)
  - Model: Classes que representam as entidades do sistema (Aluno e Treino)
  - Util: Classe utilitária para conexão com o banco de dados
    
-2.Funcionalidades
+2. Funcionalidades
 
 Para Alunos:
 
@@ -77,7 +77,7 @@ Para Treinos:
   - Cadastro de treinos associados a alunos
   - Especificação de tipo de treino, descrição, duração e data de início
 
-3.Fluxo do Programa
+3. Fluxo do Programa
 
  - Inicia na classe Main, que estabelece conexão com o banco de dados
  - Exibe o menu principal com opções para Alunos ou Treinos

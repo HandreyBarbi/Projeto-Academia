@@ -15,10 +15,13 @@ O sistema segue uma abordagem modular, com separação clara entre interface, re
 Por ser um programa simples é necessário fazer mínimas alterações no código e baixar alguns aplicativos. Tudo será explicado em baixo
 
 Wampserver: https://sourceforge.net/projects/wampserver/
+
 Serve para criar uma conexão local. Lembre-se de baixar os requisitos dele também!
 
 MySQL Workbench: https://dev.mysql.com/downloads/workbench/
+
 Usado para criar o banco de dados
+
 O link leva direto para a versão de Windows então é importante garantir que esse seja seu OS, se não for o caso, troque para o OS utilizado
 
 Para caso de falta de Visual C++ da Microsoft, os downloads estão aqui: https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170

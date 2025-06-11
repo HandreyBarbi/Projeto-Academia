@@ -157,7 +157,7 @@ public class Main {
 
     public static void cadastrarAluno(Connection connection) {
         Aluno aluno = criarNovoAluno();
-        AlunoDAO alunoDAO = new AlunoDAO();
+        AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
         try {
             alunoDAO.cadastrar(connection, aluno);
             System.out.println("Aluno cadastrado com sucesso!");
@@ -167,7 +167,7 @@ public class Main {
     }
 
 public static void listarAluno(Connection connection) {
-    AlunoDAO alunoDAO = new AlunoDAO();
+    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
     try {
         var alunos = alunoDAO.listar(connection);
         if (alunos.isEmpty()) {
@@ -175,6 +175,7 @@ public static void listarAluno(Connection connection) {
         } else {
             for (Aluno aluno : alunos) {
                 System.out.println(aluno);
+                System.out.println("----------------------");
             }
         }
     } catch (SQLException e) {
@@ -184,7 +185,7 @@ public static void listarAluno(Connection connection) {
 
 public static void editarAluno(Connection connection) {
     Scanner scanner = Main.scanner; // Usa o scanner já existente
-    AlunoDAO alunoDAO = new AlunoDAO();
+    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
 
     System.out.print("Digite o ID do aluno que deseja editar: ");
     int id = scanner.nextInt();
@@ -229,7 +230,7 @@ public static void excluirAluno(Connection connection) {
     int id = scanner.nextInt();
     scanner.nextLine();
 
-    AlunoDAO alunoDAO = new AlunoDAO();
+    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
     Aluno aluno = new Aluno();
     aluno.setId(id);
 
@@ -305,7 +306,7 @@ public static void excluirAluno(Connection connection) {
     }
 
     public static void buscarAluno(Connection connection) {
-    AlunoDAO alunoDAO = new AlunoDAO();
+    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
     System.out.println("Buscar por:");
     System.out.println(" [1] ID");
     System.out.println(" [2] Nome");

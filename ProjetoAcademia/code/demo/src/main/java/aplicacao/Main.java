@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Scanner;
 
 import dao.AlunoDAO;
@@ -26,7 +27,7 @@ public class Main {
     public static void main(String[] args) { // Gustavo
         try (Connection connection = Conexao.createConnection()) {
             if (connection == null) {
-                System.err.println("Não foi possível conectar ao banco de dados.");
+                System.err.println("!!! Não foi possível conectar ao banco de dados !!!");
                 return;
             }
             menuInicial(connection);
@@ -43,9 +44,9 @@ public class Main {
     public static void menuInicial(Connection connection) { // Handrey
         int choose;
         do {
-            System.out.println(" --------------------");
-            System.out.println(" -- Menu Principal --");
-            System.out.println(" --------------------");
+            System.out.println(" |--------------------|");
+            System.out.println(" |-- Menu Principal --|");
+            System.out.println(" |--------------------|");
             System.out.println("Escolha uma das opções:");
             System.out.println(" [1] Alunos");
             System.out.println(" [2] Treinos");
@@ -61,19 +62,19 @@ public class Main {
                     menuTreino(connection);
                     break;
                 case 3:
-                    System.out.println("Saindo...");
+                    System.out.println(">> Saindo...");
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                    System.out.println(">> Opção inválida!");
             }
         } while (choose != 3);
     }
 
     public static void menuAluno(Connection connection) { // Murilo
         /*
-         *     Murilo -> Cadastrar um novo aluno (nome, CPF, data de nascimento, telefone, e-mail)
-            Murilo -> Listar todos os alunos cadastrados.
-            Murilo -> Editar informações de um aluno existente.
+         *  Handrey -> Cadastrar um novo aluno (nome, CPF, data de nascimento, telefone, e-mail)
+            Handrey -> Listar todos os alunos cadastrados.
+            Handrey -> Editar informações de um aluno existente.
             Handrey --> Excluir um aluno do sistema.
             Handrey --> Buscar aluno por nome ou CPF.
             (Essa parte foi passada diretamente do Whatsapp e por isso sumiu os * das linhas)
@@ -82,6 +83,7 @@ public class Main {
             System.out.println(" ---------------------");
             System.out.println(" ---- Menu Alunos ----");
             System.out.println(" ---------------------");
+            System.out.println("Escolha uma das opções:");
             System.out.println(" [1] Cadastrar novo aluno");
             System.out.println(" [2] Listar alunos cadastrados");
             System.out.println(" [3] Editar informações de aluno");
@@ -109,11 +111,11 @@ public class Main {
                     buscarAluno(connection); // Eu (Gustavo) não tenho ideia de como isso funciona. Se alguém souber me explica
                     break; // Pra facilitar na funcionalidade eu decidi separar em duas partes. Provavelmente tem como simplificar
                 case 6: // Voltar pro menu principal
-                    System.out.println("Voltando ao menu principal...");
+                    System.out.println(">> Voltando ao menu principal...");
                     menuInicial(connection); // Eu não consegui entender ainda como funciona esse connection direito, tô fazendo o que o tutorial fala
                     break;
                 default:
-                    System.out.println("Digitou errado?");
+                    System.out.println(">> Digitou errado?");
             }
     }
 
@@ -129,9 +131,10 @@ public class Main {
          * (Mesma coisa do outro, os * foram pro caralho.)
          */
         do {
-            System.out.println(" --------------------");
-            System.out.println(" -------Treino-------");
-            System.out.println(" --------------------");
+            System.out.println(" |---------------------|");
+            System.out.println(" |------ Treinos ------|");
+            System.out.println(" |---------------------|");
+            System.out.println("Escolha uma das opções:");
             System.out.println(" [1] Cadastrar treino");
             System.out.println(" [2] Listar treinos");
             System.out.println(" [3] Atualizar informações cadastrais");
@@ -144,12 +147,21 @@ public class Main {
                 case 1:
                     cadastrarTreino(connection);
                     break;
+                case 2:
+                    listarTreino(connection);
+                    break;
+                case 3:
+                    atualizarTreino(connection);
+                    break;
+                case 4:
+                    excluirTreino(connection);
+                    break;
                 case 5:
-                    System.out.println("Voltando ao menu principal...");
+                    System.out.println(">> Voltando ao menu principal...");
                     menuInicial(connection);
                     break;
                 default:
-                    System.out.println("Função não implementada ainda.");
+                    System.out.println(">> Função não implementada ainda.");
             }
         } while (choose != 5);
     }
@@ -157,88 +169,87 @@ public class Main {
 
     public static void cadastrarAluno(Connection connection) {
         Aluno aluno = criarNovoAluno();
-        AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
+        AlunoDAO alunoDAO = new AlunoDAO();
         try {
             alunoDAO.cadastrar(connection, aluno);
-            System.out.println("Aluno cadastrado com sucesso!");
+            System.out.println(">> Aluno cadastrado com sucesso!");
         } catch (SQLException e) {
-            System.err.println("Erro ao cadastrar aluno: " + e.getMessage());
+            System.err.println(">> Erro ao cadastrar aluno: " + e.getMessage());
         }
     }
 
-public static void listarAluno(Connection connection) {
-    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
+    public static void listarAluno(Connection connection) {
+    AlunoDAO alunoDAO = new AlunoDAO();
     try {
         var alunos = alunoDAO.listar(connection);
         if (alunos.isEmpty()) {
-            System.out.println("Nenhum aluno cadastrado.");
+            System.out.println(">> Nenhum aluno cadastrado.");
         } else {
             for (Aluno aluno : alunos) {
                 System.out.println(aluno);
-                System.out.println("----------------------");
             }
         }
     } catch (SQLException e) {
-        System.err.println("Erro ao listar alunos: " + e.getMessage());
+        System.err.println(">> Erro ao listar alunos: " + e.getMessage());
     }
 }
 
-public static void editarAluno(Connection connection) {
+    public static void editarAluno(Connection connection) {
     Scanner scanner = Main.scanner; // Usa o scanner já existente
-    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
+    AlunoDAO alunoDAO = new AlunoDAO();
 
-    System.out.print("Digite o ID do aluno que deseja editar: ");
+    System.out.print(" Digite o ID do aluno que deseja editar: ");
     int id = scanner.nextInt();
     scanner.nextLine();
 
     Aluno aluno = new Aluno();
     aluno.setId(id);
 
-    System.out.print("Novo nome: ");
+    System.out.print(" Novo nome: ");
     aluno.setNome(scanner.nextLine());
 
-    System.out.print("Novo CPF: ");
+    System.out.print(" Novo CPF: ");
     aluno.setCpf(scanner.nextLine());
 
-    System.out.print("Novo telefone: ");
+    System.out.print(" Novo telefone: ");
     aluno.setTelefone(scanner.nextLine());
 
-    System.out.print("Novo email: ");
+    System.out.print(" Novo email: ");
     aluno.setEmail(scanner.nextLine());
 
-    System.out.print("Nova data de nascimento (yyyy-MM-dd): ");
+    System.out.print(" Nova data de nascimento (yyyy-MM-dd): ");
     try {
         String dataStr = scanner.nextLine();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date data = sdf.parse(dataStr);
-        // Eu vou arrumar essa linha de baixo amanhã, tô quase sem bateria no notebook.
+        // Converte para java.sql.Date antes de setar
         aluno.setDataNascimento(new java.sql.Date(data.getTime()));
     } catch (Exception e) {
-        System.err.println("Erro ao processar a data de nascimento: " + e.getMessage());
+        System.err.println(">> Erro ao processar a data de nascimento: " + e.getMessage());
     }
 
     try {
         alunoDAO.atualizarAluno(connection, aluno);
-        System.out.println("Aluno atualizado com sucesso!");
+        System.out.println(">> Aluno atualizado com sucesso!");
     } catch (SQLException e) {
-        System.err.println("Erro ao atualizar aluno: " + e.getMessage());
+        System.err.println(">> Erro ao atualizar aluno: " + e.getMessage());
     }
 }
 
 public static void excluirAluno(Connection connection) {
-    System.out.print("Digite o ID do aluno que deseja excluir: ");
+    System.out.print(" Digite o ID do aluno que deseja excluir: ");
     int id = scanner.nextInt();
     scanner.nextLine();
 
-    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
+    AlunoDAO alunoDAO = new AlunoDAO();
     Aluno aluno = new Aluno();
     aluno.setId(id);
 
     try {
         alunoDAO.excluirAluno(connection, aluno);
-        System.out.println("Aluno excluído com sucesso!");
+        System.out.println(">> Aluno excluído com sucesso!");
     } catch (SQLException e) {
-        System.err.println("Erro ao excluir aluno: " + e.getMessage());
+        System.err.println(">> Erro ao excluir aluno: " + e.getMessage());
     }
 }
 
@@ -246,26 +257,26 @@ public static void excluirAluno(Connection connection) {
     public static Aluno criarNovoAluno() {
         Aluno aluno = new Aluno();
 
-        System.out.print("Nome: ");
+        System.out.print(" Nome: ");
         aluno.setNome(scanner.nextLine());
 
-        System.out.print("CPF: ");
+        System.out.print(" CPF: ");
         aluno.setCpf(scanner.nextLine());
 
-        System.out.print("Telefone: ");
+        System.out.print(" Telefone: ");
         aluno.setTelefone(scanner.nextLine());
 
-        System.out.print("Email: ");
+        System.out.print(" Email: ");
         aluno.setEmail(scanner.nextLine());
 
-        System.out.print("Data de nascimento (yyyy-MM-dd): ");
+        System.out.print(" Data de nascimento (yyyy-MM-dd): ");
         try {
             String dataStr = scanner.nextLine();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data = sdf.parse(dataStr);
             aluno.setDataNascimento(new java.sql.Date(data.getTime()));
         } catch (Exception e) {
-            System.err.println("Erro ao processar a data de nascimento: " + e.getMessage());
+            System.err.println(">> Erro ao processar a data de nascimento: " + e.getMessage());
         }
         return aluno;
     }
@@ -273,40 +284,111 @@ public static void excluirAluno(Connection connection) {
 
     public static void cadastrarTreino(Connection connection) {
         Treino treino = new Treino();
-
-        System.out.print("ID do Aluno: ");
+        System.out.print(" ID do Aluno: ");
         treino.setIdAluno(Integer.parseInt(scanner.nextLine()));
-
-        System.out.print("Tipo de treino: ");
+        System.out.print(" Tipo de treino: ");
         treino.setTipoTreino(scanner.nextLine());
-
-        System.out.print("Descrição: ");
+        System.out.print(" Descrição: ");
         treino.setDescricao(scanner.nextLine());
-
-        System.out.print("Duração em minutos: ");
+        System.out.print(" Duração em minutos: ");
         treino.setDuracaoMinutos(Integer.parseInt(scanner.nextLine()));
-
-        System.out.print("Data de início (yyyy-MM-dd): ");
+        System.out.print(" Data de início (yyyy-MM-dd): ");
         try {
             String dataStr = scanner.nextLine();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data = sdf.parse(dataStr);
             treino.setDataInicio(new Date(data.getTime()));
         } catch (Exception e) {
-            System.err.println("Erro ao processar a data de início: " + e.getMessage());
+            System.err.println(">> Erro ao processar a data de início: " + e.getMessage());
         }
 
         try {
             TreinoDAO treinoDAO = new TreinoDAO(connection);
             treinoDAO.inserir(treino);
-            System.out.println("Treino cadastrado com sucesso!");
+            System.out.println(">> Treino cadastrado com sucesso!");
         } catch (SQLException e) {
-            System.err.println("Erro ao cadastrar treino: " + e.getMessage());
+            System.err.println(">> Erro ao cadastrar treino: " + e.getMessage());
         }
     }
+    //excluir treino
+    public static void excluirTreino(Connection connection) {
+    System.out.print(" Digite o ID do treino que deseja excluir: ");
+    int idtreino = scanner.nextInt();
+    scanner.nextLine();
+
+    TreinoDAO treinoDAO = new TreinoDAO(connection);
+    Treino treino = new Treino();
+    treino.setIdTreino(idtreino);
+
+    try{
+        treinoDAO.deletar(idtreino); 
+        System.out.println(">> Treino excluído com sucesso!");
+    }catch (Exception e) {
+        e.printStackTrace();
+        System.err.println(">> Erro ao excluir treino: " + e.getMessage());
+    }
+}
+//listar treino (feito por Handrey)
+    public static void listarTreino(Connection connection) {
+    TreinoDAO treinoDAO = new TreinoDAO(connection);
+    try {
+        List<Treino> treinos = treinoDAO.listarTodos();
+        if (treinos.isEmpty()) {
+            System.out.println(" Nenhum treino cadastrado.");
+        } else {
+            for (Treino treino : treinos) {
+                System.out.println(treino);
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println(">> Erro ao listar treinos: " + e.getMessage());
+    }
+}
+//fim listar treino (feito por Handrey) opção 2
+
+//atualizar infos cadastrais (feito por Handrey) opção 3
+public static void atualizarTreino(Connection connection) {
+    Treino treino = new Treino();
+    System.out.print(" Digite o ID do treino que deseja atualizar: ");
+    treino.setIdTreino(scanner.nextInt());
+    scanner.nextLine();
+
+    System.out.print(" Novo ID do aluno: ");
+    treino.setIdAluno(scanner.nextInt());
+    scanner.nextLine();
+
+    System.out.print(" Novo tipo de treino: ");
+    treino.setTipoTreino(scanner.nextLine());
+
+    System.out.print(" Nova descrição: ");
+    treino.setDescricao(scanner.nextLine());
+
+    System.out.print(" Nova duração em minutos: ");
+    treino.setDuracaoMinutos(scanner.nextInt());
+    scanner.nextLine();
+
+    System.out.print(" Nova data de início (yyyy-MM-dd): ");
+    try {
+        String dataStr = scanner.nextLine();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date data = sdf.parse(dataStr);
+        treino.setDataInicio(new java.sql.Date(data.getTime()));
+    } catch (Exception e) {
+        System.err.println(">> Erro ao processar a data de início: " + e.getMessage());
+    }
+
+    try {
+        TreinoDAO dao = new TreinoDAO(connection);
+        dao.atualizar(treino);
+        System.out.println(">> Treino atualizado com sucesso!");
+    } catch (SQLException e) {
+        System.err.println(">> Erro ao atualizar treino: " + e.getMessage());
+    }
+}
+//fim atualizar infos cadastrais (feito por Handrey)
 
     public static void buscarAluno(Connection connection) {
-    AlunoDAO alunoDAO = new AlunoDAO(null, null, null, null, null);
+    AlunoDAO alunoDAO = new AlunoDAO();
     System.out.println("Buscar por:");
     System.out.println(" [1] ID");
     System.out.println(" [2] Nome");
